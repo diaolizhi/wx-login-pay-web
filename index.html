@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">小 D 课堂</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">首页<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">视频</a>
+                    </li>
+                </ul>
+                <ul class="form-inline my-2 my-lg-0" v-if="!is_login">
+                    <li class="nav-item btn btn-primary">
+                        <a class="nav-link text-light" v-bind:href="login_url">登录</a>
+                    </li>
+                </ul>
+                <ul class="form-inline my-2 my-lg-0 navbar-nav" v-if="is_login">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ userinfo.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <img v-bind:src="userinfo.head_img" alt="" style="height:72px; width:72px;">
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div id="app" class="container">
+        <div class="row">
+            <div class="card col-3" style="width: 18rem;" v-for="(video, index) in videos">
+                <img v-bind:src="video.videoCover" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="#" @click="addOrder(index)" class="btn btn-primary" data-toggle="modal" v-bind:data-target="'#video' + video.id">点击购买</a>
+                    <hr>
+                    <span class="card-title">{{ video.videoTitle }}</span>
+                    <span class="text-info"> 价格：{{ video.price/100 }} 元</span>
+                </div>
+                <div class="modal fade" v-bind:id="'video' + video.id" tabindex="-1" role="dialog" v-bind:aria-labelledby="'video' + video.id"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">微信扫码购买</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ video.videoTitle }} <hr>
+                                <img v-bind:src="video.addOrderUrl" alt="">
+                                <!-- <img src="http://127.0.0.1:8080/api/v1/video_order/add?user_id=1&video_id=3" alt=""> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
