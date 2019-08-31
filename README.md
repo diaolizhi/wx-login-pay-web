@@ -10,4 +10,4 @@
 # 扫码购买界面
 ![](/img/code.png)
 
-xxxx
+aaaa
